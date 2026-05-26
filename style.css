@@ -5,16 +5,36 @@
         justify-content: center;
     }
 
-        .fonterosa  {
+        .fonteazul  {
         font-size: 20px;
         font-family: Arial, Helvetica, sans-serif;
         color: rgb(20, 3, 252);
         justify-content: center;
     }
-        .fonterosa:hover {
+
+
+        .fonterosa {
+        font-size: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: rgb(228, 112, 222);
+        justify-content: center;
+    }
+        .fonteazul:hover {
         font-size: 20px;
         font-family: Arial, Helvetica, sans-serif;
         color: rgb(223, 71, 190);
+        justify-content: center;
+    }
+       .fonterosa:hover {
+        font-size: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: rgb(18, 14, 240);
+        justify-content: center;
+    }
+    .fonteroxa:hover {
+        font-size: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: rgb(6, 102, 22);
         justify-content: center;
     }
     #fondo{

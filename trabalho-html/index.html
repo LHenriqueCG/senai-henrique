@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinterest - Brasil 2026</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <link rel="icon" type="image/x-icon" href="src/imagens/favicon.ico">
+</head>
+
+<body>
+    <section>
+        <div id="login">
+            <h1>Bem-vindo(a) ao Pinterest</h1>
+            <p>Email</p>
+            <input type="text" id="email" placeholder="E-mail">
+            <p>Senha</p>
+            <input type="password" id="senha" placeholder="Senha"><br>
+
+            <p><a href="#">Esqueceu sua senha?</a></p>
+
+            <button id="login-button" onclick="login()">Entrar</button>
+            <p><a href="#">Não tem uma conta? Inscreva-se</a></p>
+        </div>
+    </section>
+    <section>
+        <div id="home" style="display: none;">
+            <h1>Sua página de criaividade e inspirações está aqui!</h1>
+            <p>Explore ideias, crie painéis e compartilhe suas inspirações.</p>
+            <button id="logout-button" onclick="logout()">Sair</button>
+        </div>
+    </section>
+
+
+    <div>
+        <img src="src/imagens/logotipo-do-pinterest.png" id="icone" alt="Ícone do Pinterest">
+    </div>
+
+    <div>
+        <img src="src/imagens/imagem-home.jpg" id="imagem" alt="uma sobreposição de imagens com paletas de cores vivas">
+    </div>
+
+</body>
+
+</html>

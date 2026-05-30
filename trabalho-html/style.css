@@ -1,0 +1,55 @@
+body {
+    background-color: #ffffff;
+}
+
+title {
+    box-align: center;
+    font-size: 24px; font-weight: bold; font-family: Dunkin, sans-serif;
+}
+
+input {
+    box-align: center;
+    padding: 15px 340px;
+    margin: 2px;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+}
+
+p {
+    box-align: center;
+    font-size: 18px;
+    color: #333;
+}
+
+Button {
+    box-align: center;
+    padding: 10px 400px;
+    background-color: #f01304;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#icone {
+    box-align: center;
+    margin-bottom: 20px;
+    size: 100px;
+    width: 100px;
+    height: 100px;
+}
+
+#imagem {
+    box-align: center;
+    margin-bottom: 20px;
+    margin-top: -500px;
+    margin-left: 900px;
+    width: 30%;
+    height: 30%;
+}
+
+#home h1 {
+    box-align: center;
+    font-size: 24px; font-weight: bold; font-family: Dunkin, sans-serif;
+}

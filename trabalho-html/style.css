@@ -8,11 +8,17 @@ title {
 }
 
 input {
-    box-align: center;
-    padding: 15px 340px;
-    margin: 2px;
-    border-radius: 15px;
-    border: 1px solid #ccc;
+ margin-left: auto;
+      padding: 8px 330px;
+      border-radius: 999px;
+      border: 1.5px solid #ddd;
+      background: var(--white);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+      white-space: nowrap;
 }
 
 p {

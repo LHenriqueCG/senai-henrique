@@ -32,3 +32,6 @@ function mostrarLogin(){
 function esconderHome(){
     let telaHome = document.getElementById("home").style.display = "none";
 }
+function mostrarimagem(){
+    let telaHome= document.getElementById("imagem").style.display = "none";
+}

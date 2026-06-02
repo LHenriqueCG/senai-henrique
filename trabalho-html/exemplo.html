@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pinterest – Brasil 2026</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/x-icon" href="src/imagens/favicon.ico">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -535,13 +536,13 @@
   });
 
   const PIN_DATA = [
-    { h: 220, g: "135deg,#ffd6e0,#ff9ab2", icon:"🌸", tag:"Decoração" },
+    { h: 220, g: "135deg,#ffd6e0,#ff9ab2", icon:"🌸", tag:"Decoração"},
     { h: 160, g: "135deg,#d4f1f4,#78c1d3", icon:"🏠", tag:"Viagem" },
     { h: 280, g: "135deg,#fff3bf,#ffe066", icon:"☀️", tag:"Comida" },
     { h: 200, g: "135deg,#d5f5e3,#82e0aa", icon:"🌿", tag:"Natureza" },
     { h: 300, g: "135deg,#f8d7da,#f5a6ae", icon:"🎨", tag:"Moda" },
     { h: 180, g: "135deg,#e8daef,#c39bd3", icon:"💜", tag:"Arte" },
-    { h: 240, g: "135deg,#fce4d6,#f9c49e", icon:"🍊", tag:"DIY" },
+    { h: 240, g: "135deg,#fce4d6,#f9c49e", icon:"🍊", tag:"DIY", link:"https://www.mfrural.com.br/busca/laranja" },
     { h: 170, g: "135deg,#d6eaf8,#7fb3d3", icon:"🌊", tag:"Arquitetura" },
     { h: 260, g: "135deg,#d5f5e3,#58d68d", icon:"🌱", tag:"Jardim" },
     { h: 200, g: "135deg,#f9f0ff,#c39bd3", icon:"✨", tag:"Design" },
@@ -560,9 +561,11 @@
       card.className = "pin-card";
       card.style.cssText = `background:linear-gradient(${p.g}); height:${p.h}px;`;
       card.innerHTML = `${p.icon}<div class="pin-overlay"><span class="pin-tag">${p.tag}</span></div>`;
+      card.onclick = () => location.href = p.link || "#";
       grid.appendChild(card);
     });
   }
+  
 </script>
 
 </body>

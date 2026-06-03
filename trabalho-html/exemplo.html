@@ -1,27 +1,37 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pinterest – Brasil 2026</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
   <link rel="icon" type="image/x-icon" href="src/imagens/favicon.ico">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --red:    #e60023;
-      --red-dk: #ad081b;
-      --black:  #111111;
-      --white:  #ffffff;
-      --gray:   #f5f5f5;
-      --muted:  #767676;
-      --radius: 24px;
-      --card-radius: 16px;
-      --transition: .25s cubic-bezier(.4,0,.2,1);
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    html, body {
+    :root {
+      --red: #e60023;
+      --red-dk: #ad081b;
+      --black: #111111;
+      --white: #ffffff;
+      --gray: #f5f5f5;
+      --muted: #767676;
+      --radius: 24px;
+      --card-radius: 16px;
+      --transition: .25s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    html,
+    body {
       height: 100%;
       font-family: 'DM Sans', sans-serif;
       background: var(--white);
@@ -56,7 +66,9 @@
     .panel-left::after {
       content: '';
       position: absolute;
-      right: 0; top: 10%; bottom: 10%;
+      right: 0;
+      top: 10%;
+      bottom: 10%;
       width: 1px;
       background: linear-gradient(to bottom, transparent, #ddd 40%, #ddd 60%, transparent);
     }
@@ -90,38 +102,99 @@
       animation: fadeUp .6s ease both;
     }
 
-    .tile:nth-child(1)  { background: linear-gradient(135deg,#ffd6e0,#ff9ab2); grid-row: span 2; animation-delay:.10s; font-size:64px; }
-    .tile:nth-child(2)  { background: linear-gradient(135deg,#d4f1f4,#78c1d3); animation-delay:.15s; }
-    .tile:nth-child(3)  { background: linear-gradient(135deg,#fff3bf,#ffe066); animation-delay:.20s; }
-    .tile:nth-child(4)  { background: linear-gradient(135deg,#d5f5e3,#82e0aa); animation-delay:.25s; }
-    .tile:nth-child(5)  { background: linear-gradient(135deg,#f8d7da,#f5a6ae); grid-row: span 2; animation-delay:.30s; font-size:64px; }
-    .tile:nth-child(6)  { background: linear-gradient(135deg,#e8daef,#c39bd3); animation-delay:.35s; }
-    .tile:nth-child(7)  { background: linear-gradient(135deg,#fce4d6,#f9c49e); animation-delay:.40s; }
-    .tile:nth-child(8)  { background: linear-gradient(135deg,#d6eaf8,#7fb3d3); animation-delay:.45s; }
-    .tile:nth-child(9)  { background: linear-gradient(135deg,#d5f5e3,#58d68d); animation-delay:.50s; }
+    .tile:nth-child(1) {
+      background: linear-gradient(135deg, #ffd6e0, #ff9ab2);
+      grid-row: span 2;
+      animation-delay: .10s;
+      font-size: 64px;
+    }
+
+    .tile:nth-child(2) {
+      background: linear-gradient(135deg, #d4f1f4, #78c1d3);
+      animation-delay: .15s;
+    }
+
+    .tile:nth-child(3) {
+      background: linear-gradient(135deg, #fff3bf, #ffe066);
+      animation-delay: .20s;
+    }
+
+    .tile:nth-child(4) {
+      background: linear-gradient(135deg, #d5f5e3, #82e0aa);
+      animation-delay: .25s;
+    }
+
+    .tile:nth-child(5) {
+      background: linear-gradient(135deg, #f8d7da, #f5a6ae);
+      grid-row: span 2;
+      animation-delay: .30s;
+      font-size: 64px;
+    }
+
+    .tile:nth-child(6) {
+      background: linear-gradient(135deg, #e8daef, #c39bd3);
+      animation-delay: .35s;
+    }
+
+    .tile:nth-child(7) {
+      background: linear-gradient(135deg, #fce4d6, #f9c49e);
+      animation-delay: .40s;
+    }
+
+    .tile:nth-child(8) {
+      background: linear-gradient(135deg, #d6eaf8, #7fb3d3);
+      animation-delay: .45s;
+    }
+
+    .tile:nth-child(9) {
+      background: linear-gradient(135deg, #d5f5e3, #58d68d);
+      animation-delay: .50s;
+    }
 
     /* Floating tags */
     .tag-float {
       position: absolute;
       z-index: 3;
-      background: rgba(255,255,255,.92);
+      background: rgba(255, 255, 255, .92);
       backdrop-filter: blur(6px);
       border-radius: 999px;
       padding: 7px 16px;
       font-size: 13px;
       font-weight: 600;
       color: var(--black);
-      box-shadow: 0 4px 16px rgba(0,0,0,.10);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .10);
       animation: floatTag 6s ease-in-out infinite;
       white-space: nowrap;
     }
-    .tag-float:nth-child(1) { top: 12%; left: 8%; animation-delay:0s; }
-    .tag-float:nth-child(2) { top: 42%; left: 18%; animation-delay:2s; }
-    .tag-float:nth-child(3) { bottom: 14%; left: 6%; animation-delay:4s; }
+
+    .tag-float:nth-child(1) {
+      top: 12%;
+      left: 8%;
+      animation-delay: 0s;
+    }
+
+    .tag-float:nth-child(2) {
+      top: 42%;
+      left: 18%;
+      animation-delay: 2s;
+    }
+
+    .tag-float:nth-child(3) {
+      bottom: 14%;
+      left: 6%;
+      animation-delay: 4s;
+    }
 
     @keyframes floatTag {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-8px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
     }
 
     /* Soft left-edge fade so tags blend into form panel */
@@ -129,7 +202,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to right, rgba(255,255,255,.5) 0%, transparent 25%);
+      background: linear-gradient(to right, rgba(255, 255, 255, .5) 0%, transparent 25%);
       pointer-events: none;
       z-index: 2;
     }
@@ -144,14 +217,21 @@
     }
 
     .logo-icon {
-      width: 42px; height: 42px;
+      width: 42px;
+      height: 42px;
       background: var(--red);
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
     }
 
-    .logo-icon svg { fill: #fff; width: 22px; height: 22px; }
+    .logo-icon svg {
+      fill: #fff;
+      width: 22px;
+      height: 22px;
+    }
 
     .logo-text {
       font-family: 'DM Serif Display', serif;
@@ -188,7 +268,11 @@
       animation: fadeUp .4s .18s ease both;
     }
 
-    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
 
     .field label {
       font-size: 13px;
@@ -215,7 +299,9 @@
       background: #fff8f8;
     }
 
-    .field input::placeholder { color: #bbb; }
+    .field input::placeholder {
+      color: #bbb;
+    }
 
     .error-msg {
       font-size: 13px;
@@ -228,7 +314,10 @@
       transition: opacity var(--transition), transform var(--transition);
     }
 
-    .error-msg.show { opacity: 1; transform: translateY(0); }
+    .error-msg.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     .btn-primary {
       height: 50px;
@@ -241,17 +330,19 @@
       font-family: 'DM Sans', sans-serif;
       cursor: pointer;
       transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
-      box-shadow: 0 4px 18px rgba(230,0,35,.28);
+      box-shadow: 0 4px 18px rgba(230, 0, 35, .28);
       width: 100%;
     }
 
     .btn-primary:hover {
       background: var(--red-dk);
       transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(230,0,35,.38);
+      box-shadow: 0 8px 24px rgba(230, 0, 35, .38);
     }
 
-    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:active {
+      transform: translateY(0);
+    }
 
     .link-row {
       text-align: center;
@@ -259,16 +350,30 @@
       color: var(--muted);
     }
 
-    .link-row a { color: var(--black); font-weight: 600; text-decoration: none; }
-    .link-row a:hover { text-decoration: underline; }
-
-    .divider {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 12px; color: #ccc;
+    .link-row a {
+      color: var(--black);
+      font-weight: 600;
+      text-decoration: none;
     }
 
-    .divider::before, .divider::after {
-      content: ''; flex: 1; height: 1px; background: #eee;
+    .link-row a:hover {
+      text-decoration: underline;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: #ccc;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #eee;
     }
 
     /* ════════════════════════════
@@ -288,13 +393,17 @@
       padding: 0 28px;
       gap: 16px;
       border-bottom: 1px solid #f0f0f0;
-      position: sticky; top: 0;
-      background: rgba(255,255,255,.92);
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, .92);
       backdrop-filter: blur(10px);
       z-index: 10;
     }
 
-    .navbar .logo { margin-bottom: 0; animation: none; }
+    .navbar .logo {
+      margin-bottom: 0;
+      animation: none;
+    }
 
     .search-bar {
       flex: 1;
@@ -302,7 +411,8 @@
       height: 42px;
       background: var(--gray);
       border-radius: 999px;
-      display: flex; align-items: center;
+      display: flex;
+      align-items: center;
       padding: 0 16px;
       gap: 8px;
       font-size: 14px;
@@ -310,7 +420,10 @@
       cursor: text;
     }
 
-    .search-bar svg { flex-shrink: 0; opacity: .45; }
+    .search-bar svg {
+      flex-shrink: 0;
+      opacity: .45;
+    }
 
     .btn-logout {
       margin-left: auto;
@@ -326,7 +439,10 @@
       white-space: nowrap;
     }
 
-    .btn-logout:hover { border-color: var(--black); background: var(--gray); }
+    .btn-logout:hover {
+      border-color: var(--black);
+      background: var(--gray);
+    }
 
     .banner {
       padding: 48px 40px 28px;
@@ -340,7 +456,10 @@
       margin-bottom: 10px;
     }
 
-    .banner p { font-size: 16px; color: var(--muted); }
+    .banner p {
+      font-size: 16px;
+      color: var(--muted);
+    }
 
     .pin-grid {
       columns: 5;
@@ -362,19 +481,25 @@
       transition: transform var(--transition);
     }
 
-    .pin-card:hover { transform: scale(1.02); }
+    .pin-card:hover {
+      transform: scale(1.02);
+    }
 
     .pin-overlay {
-      position: absolute; inset: 0;
-      background: rgba(0,0,0,.32);
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, .32);
       border-radius: var(--card-radius);
       opacity: 0;
-      display: flex; align-items: flex-end;
+      display: flex;
+      align-items: flex-end;
       padding: 12px;
       transition: opacity var(--transition);
     }
 
-    .pin-card:hover .pin-overlay { opacity: 1; }
+    .pin-card:hover .pin-overlay {
+      opacity: 1;
+    }
 
     .pin-tag {
       background: var(--white);
@@ -387,186 +512,245 @@
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
-      from { opacity:0; transform:translateY(20px); }
-      to   { opacity:1; transform:translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes shake {
-      0%,100%{transform:translateX(0)}
-      20%{transform:translateX(-6px)}
-      40%{transform:translateX(6px)}
-      60%{transform:translateX(-4px)}
-      80%{transform:translateX(4px)}
+
+      0%,
+      100% {
+        transform: translateX(0)
+      }
+
+      20% {
+        transform: translateX(-6px)
+      }
+
+      40% {
+        transform: translateX(6px)
+      }
+
+      60% {
+        transform: translateX(-4px)
+      }
+
+      80% {
+        transform: translateX(4px)
+      }
     }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 800px) {
-      #screen-login { flex-direction: column; height: auto; min-height: 100vh; }
-      .panel-left { width: 100%; min-width: unset; padding: 40px 28px; }
-      .panel-left::after { display: none; }
-      .panel-right { min-height: 260px; flex-shrink: 0; }
-      .mosaic { grid-template-columns: repeat(3,1fr); }
-      .pin-grid { columns: 2; }
-      .banner h1 { font-size: 26px; }
+      #screen-login {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+      }
+
+      .panel-left {
+        width: 100%;
+        min-width: unset;
+        padding: 40px 28px;
+      }
+
+      .panel-left::after {
+        display: none;
+      }
+
+      .panel-right {
+        min-height: 260px;
+        flex-shrink: 0;
+      }
+
+      .mosaic {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .pin-grid {
+        columns: 2;
+      }
+
+      .banner h1 {
+        font-size: 26px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<!-- LOGIN -->
-<div id="screen-login">
-  <aside class="panel-left">
+  <!-- LOGIN -->
+  <div id="screen-login">
+    <aside class="panel-left">
 
-    <div class="logo">
-      <div class="logo-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
-      </div>
-      <span class="logo-text">Pinterest</span>
-    </div>
-
-    <h1>Bem-vindo(a) de volta</h1>
-    <p class="subtitle">Entre para explorar suas inspirações</p>
-
-    <div class="form">
-      <div class="field">
-        <label for="email">E-mail</label>
-        <input type="text" id="email" placeholder="seu@email.com" autocomplete="email" />
-      </div>
-      <div class="field">
-        <label for="senha">Senha</label>
-        <input type="password" id="senha" placeholder="••••••••" autocomplete="current-password" />
+      <div class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z" />
+          </svg>
+        </div>
+        <span class="logo-text">Pinterest</span>
       </div>
 
-      <div class="error-msg" id="error-msg">Usuário ou senha incorretos. Tente novamente.</div>
+      <h1>Bem-vindo(a) de volta</h1>
+      <p class="subtitle">Entre para explorar suas inspirações</p>
 
-      <button class="btn-primary" id="btn-login" onclick="login()">Entrar</button>
+      <div class="form">
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input type="text" id="email" placeholder="seu@email.com" autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" placeholder="••••••••" autocomplete="current-password" />
+        </div>
 
-      <p class="link-row"><a href="#">Esqueceu sua senha?</a></p>
-      <div class="divider">ou</div>
-      <p class="link-row">Não tem uma conta? <a href="#">Inscreva-se</a></p>
-    </div>
+        <div class="error-msg" id="error-msg">Usuário ou senha incorretos. Tente novamente.</div>
 
-  </aside>
+        <button class="btn-primary" id="btn-login" onclick="login()">Entrar</button>
 
-  <div class="panel-right">
-    <span class="tag-float">✨ Decoração</span>
-    <span class="tag-float">🌿 Natureza</span>
-    <span class="tag-float">🎨 Arte</span>
+        <p class="link-row"><a href="#">Esqueceu sua senha?</a></p>
+        <div class="divider">ou</div>
+        <p class="link-row">Não tem uma conta? <a href="#">Inscreva-se</a></p>
+      </div>
 
-    <div class="mosaic">
-      <div class="tile">🌸</div>
-      <div class="tile">🏠</div>
-      <div class="tile">☀️</div>
-      <div class="tile">🌿</div>
-      <div class="tile">🎨</div>
-      <div class="tile">💜</div>
-      <div class="tile">🍊</div>
-      <div class="tile">🌊</div>
-      <div class="tile">🌱</div>
+    </aside>
+
+    <div class="panel-right">
+      <span class="tag-float">✨ Decoração</span>
+      <span class="tag-float">🌿 Natureza</span>
+      <span class="tag-float">🎨 Arte</span>
+
+      <div class="mosaic">
+        <div class="tile">🌸</div>
+        <div class="tile">🏠</div>
+        <div class="tile">☀️</div>
+        <div class="tile">🌿</div>
+        <div class="tile">🎨</div>
+        <div class="tile">💜</div>
+        <div class="tile">🍊</div>
+        <div class="tile">🌊</div>
+        <div class="tile">🌱</div>
+      </div>
     </div>
   </div>
-</div>
 
 
-<!-- HOME -->
-<div id="screen-home">
-  <nav class="navbar">
-    <div class="logo">
-      <div class="logo-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+  <!-- HOME -->
+  <div id="screen-home">
+    <nav class="navbar">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z" />
+          </svg>
+        </div>
+        <span class="logo-text">Pinterest</span>
       </div>
-      <span class="logo-text">Pinterest</span>
+
+      <div class="search-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        Pesquisar ideias...
+      </div>
+
+      <button class="btn-logout" onclick="logout()">Sair</button>
+    </nav>
+
+    <div class="banner">
+      <h1>Sua página de criatividade está aqui ✨</h1>
+      <p>Explore ideias, crie painéis e compartilhe suas inspirações.</p>
     </div>
 
-    <div class="search-bar">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
-      Pesquisar ideias...
-    </div>
-
-    <button class="btn-logout" onclick="logout()">Sair</button>
-  </nav>
-
-  <div class="banner">
-    <h1>Sua página de criatividade está aqui ✨</h1>
-    <p>Explore ideias, crie painéis e compartilhe suas inspirações.</p>
+    <div class="pin-grid" id="pin-grid"></div>
   </div>
 
-  <div class="pin-grid" id="pin-grid"></div>
-</div>
 
+  <script>
+    const USUARIO_VALIDO = "gmail";
+    const SENHA_VALIDA = "1234";
 
-<script>
-  const USUARIO_VALIDO = "gmail";
-  const SENHA_VALIDA   = "1234";
+    function login() {
+      const usuario = document.getElementById("email").value.trim();
+      const senha = document.getElementById("senha").value;
+      const err = document.getElementById("error-msg");
+      const btn = document.getElementById("btn-login");
 
-  function login() {
-    const usuario = document.getElementById("email").value.trim();
-    const senha   = document.getElementById("senha").value;
-    const err     = document.getElementById("error-msg");
-    const btn     = document.getElementById("btn-login");
-
-    if (usuario === USUARIO_VALIDO && senha === SENHA_VALIDA) {
-      err.classList.remove("show");
-      document.getElementById("screen-login").style.display = "none";
-      const home = document.getElementById("screen-home");
-      home.style.display = "flex";
-      gerarPins();
-    } else {
-      err.classList.add("show");
-      btn.style.animation = "none";
-      void btn.offsetWidth; // reflow
-      btn.style.animation = "shake .4s ease";
+      if (usuario === USUARIO_VALIDO && senha === SENHA_VALIDA) {
+        err.classList.remove("show");
+        document.getElementById("screen-login").style.display = "none";
+        const home = document.getElementById("screen-home");
+        home.style.display = "flex";
+        gerarPins();
+      } else {
+        err.classList.add("show");
+        btn.style.animation = "none";
+        void btn.offsetWidth; // reflow
+        btn.style.animation = "shake .4s ease";
+      }
     }
-  }
 
-  function logout() {
-    document.getElementById("screen-home").style.display = "none";
-    document.getElementById("screen-login").style.display = "flex";
-    document.getElementById("email").value = "";
-    document.getElementById("senha").value = "";
-    document.getElementById("error-msg").classList.remove("show");
-  }
-
-  document.addEventListener("keydown", e => {
-    if (e.key === "Enter" && document.getElementById("screen-login").style.display !== "none") {
-      login();
+    function logout() {
+      document.getElementById("screen-home").style.display = "none";
+      document.getElementById("screen-login").style.display = "flex";
+      document.getElementById("email").value = "";
+      document.getElementById("senha").value = "";
+      document.getElementById("error-msg").classList.remove("show");
     }
-  });
 
-  const PIN_DATA = [
-    { h: 220, g: "135deg,#ffd6e0,#ff9ab2", icon:"🌸", tag:"Decoração"},
-    { h: 160, g: "135deg,#d4f1f4,#78c1d3", icon:"🏠", tag:"Viagem" },
-    { h: 280, g: "135deg,#fff3bf,#ffe066", icon:"☀️", tag:"Comida" },
-    { h: 200, g: "135deg,#d5f5e3,#82e0aa", icon:"🌿", tag:"Natureza" },
-    { h: 300, g: "135deg,#f8d7da,#f5a6ae", icon:"🎨", tag:"Moda" },
-    { h: 180, g: "135deg,#e8daef,#c39bd3", icon:"💜", tag:"Arte" },
-    { h: 240, g: "135deg,#fce4d6,#f9c49e", icon:"🍊", tag:"DIY", link:"https://www.mfrural.com.br/busca/laranja" },
-    { h: 170, g: "135deg,#d6eaf8,#7fb3d3", icon:"🌊", tag:"Arquitetura" },
-    { h: 260, g: "135deg,#d5f5e3,#58d68d", icon:"🌱", tag:"Jardim" },
-    { h: 200, g: "135deg,#f9f0ff,#c39bd3", icon:"✨", tag:"Design" },
-    { h: 190, g: "135deg,#fdebd0,#f0a500", icon:"🦋", tag:"Fotografia" },
-    { h: 230, g: "135deg,#eaf2fb,#85c1e9", icon:"🍃", tag:"Minimalismo" },
-    { h: 210, g: "135deg,#fdedec,#f1948a", icon:"🎀", tag:"Beleza" },
-    { h: 270, g: "135deg,#eafaf1,#27ae60", icon:"🌙", tag:"Sustentável" },
-    { h: 190, g: "135deg,#fff8e1,#ffcc02", icon:"🔮", tag:"Tecnologia" },
-  ];
-
-  function gerarPins() {
-    const grid = document.getElementById("pin-grid");
-    if (grid.children.length > 0) return;
-    PIN_DATA.forEach(p => {
-      const card = document.createElement("div");
-      card.className = "pin-card";
-      card.style.cssText = `background:linear-gradient(${p.g}); height:${p.h}px;`;
-      card.innerHTML = `${p.icon}<div class="pin-overlay"><span class="pin-tag">${p.tag}</span></div>`;
-      card.onclick = () => location.href = p.link || "#";
-      grid.appendChild(card);
+    document.addEventListener("keydown", e => {
+      if (e.key === "Enter" && document.getElementById("screen-login").style.display !== "none") {
+        login();
+      }
     });
-  }
-  
-</script>
+
+    const PIN_DATA = [
+      { h: 220, g: "135deg,#ffd6e0,#ff9ab2", icon: "🌸", tag: "Decoração", link: "https://www.decorfacil.com/" },
+      { h: 160, g: "135deg,#d4f1f4,#78c1d3", icon: "🏠", tag: "Viagem", link: "https://www.decolar.com/" },
+      { h: 280, g: "135deg,#fff3bf,#ffe066", icon: "☀️", tag: "Comida", link: "https://www.tudogostoso.com.br/" },
+      { h: 200, g: "135deg,#d5f5e3,#82e0aa", icon: "🌿", tag: "Natureza", link: "https://www.naturezaonline.com.br/revista" },
+      { h: 300, g: "135deg,#f8d7da,#f5a6ae", icon: "🎨", tag: "Moda", link: "https://www.tecmundo.com.br/minha-serie/225242-jojos-bizarre-adventure-moda-importante-anime.htm" },
+      { h: 180, g: "135deg,#e8daef,#c39bd3", icon: "💜", tag: "Arte", link: "https://ccbb.com.br/" },
+      { h: 240, g: "135deg,#fce4d6,#f9c49e", icon: "🍊", tag: "DIY", link: "https://www.behance.net/gallery/660433/Laranja-Caseira" },
+      { h: 170, g: "135deg,#d6eaf8,#7fb3d3", icon: "🌊", tag: "Arquitetura", link: "https://www.galeriadaarquitetura.com.br/" },
+      { h: 260, g: "135deg,#d5f5e3,#58d68d", icon: "🌱", tag: "Jardim", link: "https://jbrj.eleventickets.com/#!/home" },
+      { h: 200, g: "135deg,#f9f0ff,#c39bd3", icon: "✨", tag: "Design", link: "https://www.cbd.org.br/" },
+      { h: 190, g: "135deg,#fdebd0,#f0a500", icon: "🦋", tag: "Fotografia", link: "https://www.todamateria.com.br/historia-da-fotografia/" },
+      { h: 230, g: "135deg,#eaf2fb,#85c1e9", icon: "🍃", tag: "Minimalismo", link: "https://www.felizcomavida.com/minimalismo/" },
+      { h: 210, g: "135deg,#fdedec,#f1948a", icon: "🎀", tag: "Beleza", link: "https://vogue.globo.com/beleza/" },
+      { h: 270, g: "135deg,#eafaf1,#27ae60", icon: "🌙", tag: "Sustentável", link: "https://www.raizen.com.br/blog/sustentabilidade-empresa" },
+      { h: 190, g: "135deg,#fff8e1,#ffcc02", icon: "🔮", tag: "Tecnologia", link: "https://itsrio.org/pt/home/" },
+    ];
+
+    function gerarPins() {
+      const grid = document.getElementById("pin-grid");
+      if (grid.children.length > 0) return;
+      PIN_DATA.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "pin-card";
+        card.style.cssText = `background:linear-gradient(${p.g}); height:${p.h}px;`;
+        card.innerHTML = `${p.icon}<div class="pin-overlay"><span class="pin-tag">${p.tag}</span></div>`;
+        card.onclick = () => {
+      if (p.link) window.open(p.link, '_blank');
+    };
+    
+    grid.appendChild(card);
+  });
+}
+  </script>
 
 </body>
+
 </html>

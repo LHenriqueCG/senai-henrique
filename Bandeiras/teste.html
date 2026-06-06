@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Países</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        /* Estilos básicos apenas para organizar as bandeiras em grade */
+        #paises-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        .card-pais {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            width: 150px;
+            text-align: center;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer; /* Transforma o card todo em clicável */
+            background-color: #fff;
+        }
+
+        .card-pais:hover {
+            transform: scale(1.05);
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .card-pais img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        
+        .card-pais h3 {
+            font-size: 14px;
+            margin: 10px 0 0 0;
+            color: #333;
+        }
+
+        /* --- ESTILIZAÇÃO DO NOVO ALERTA CUSTOMIZADO (MODAL) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px); /* Efeito de fundo desfocado super moderno */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Classe ativa para mostrar o modal */
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            font-family: sans-serif;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-box h2 {
+            margin-top: 0;
+            color: #222;
+            font-size: 20px;
+        }
+
+        .modal-box p {
+            color: #555;
+            font-size: 15px;
+            line-height: 1.5;
+            margin: 20px 0;
+        }
+
+        .modal-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .modal-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="paises-container">Carregando países...</div>
+
+    <div id="custom-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h2 id="modal-titulo">Informações da Bandeira</h2>
+            <p id="modal-texto">Descrição aqui...</p>
+            <button class="modal-btn" id="modal-fechar">Entendi e ir para o mapa</button>
+        </div>
+    </div>
+
+    <script>
+        // Variáveis globais para controlar o próximo passo após fechar o modal
+        let urlDestinoGlobal = '';
+
+        // Função para exibir o alerta customizado
+        function mostrarAlerta(titulo, texto, urlDestino) {
+            document.getElementById('modal-titulo').innerText = titulo;
+            document.getElementById('modal-texto').innerText = texto;
+            urlDestinoGlobal = urlDestino; // Guarda a URL para acessar depois
+            
+            document.getElementById('custom-modal').classList.add('active');
+        }
+
+        // Função para fechar o alerta e redirecionar o usuário
+        document.getElementById('modal-fechar').addEventListener('click', () => {
+            document.getElementById('custom-modal').classList.remove('active');
+            
+            // Abre o mapa do Google na nova aba assim que o usuário clica no botão do modal
+            if (urlDestinoGlobal) {
+                window.open(urlDestinoGlobal, '_blank');
+            }
+        });
+
+        async function carregarPaises() {
+            const url = 'https://restcountries.com/v3.1/all?fields=name,flags';
+            const container = document.getElementById('paises-container');
+
+            if (!container) {
+                console.error("Erro: O elemento #paises-container não foi encontrado no HTML.");
+                return;
+            }
+
+            try {
+                const resposta = await fetch(url);
+                
+                if (!resposta.ok) {
+                    throw new Error(`Erro na API: ${resposta.status}`);
+                }
+
+                const paises = await resposta.json();
+
+                paises.sort((a, b) => a.name.common.localeCompare(b.name.common));
+
+                const htmlGerado = paises.map(pais => {
+                   
+                     
+                        urlDestino = `https://www.google.com/search?q=mapa de ${pais.name.common}`
+        
+                    
+                    const textoAlt = pais.flags.alt 
+                        ? pais.flags.alt.replace(/'/g, "\\'") 
+                        : `Bandeira oficial do país: ${pais.name.common}.`;
+
+                    const nomePais = pais.name.common.replace(/'/g, "\\'");
+
+                    // Renderiza diretamente o card-pais com o evento onclick chamando a nossa função customizada
+                    return `
+                        <div class="card-pais" onclick="mostrarAlerta('${nomePais}', '${textoAlt}', '${urlDestino}')">
+                            <img src="${pais.flags.svg}" alt="Bandeira de ${pais.name.common}">
+                            <h3>${pais.name.common}</h3>
+                        </div>
+                    `;
+                }).join('');
+
+                container.innerHTML = htmlGerado;
+
+            } catch (erro) {
+                console.error('Erro detalhado:', erro);
+                container.innerHTML = `<p style="color: red;">Erro ao carregar dados. Verifique o console do navegador.</p>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', carregarPaises);
+    </script>
+</body>
+</html>

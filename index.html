@@ -509,6 +509,189 @@ button:active {
 
 <script>
 // ============================================================
+//  🔊 MOTOR DE ÁUDIO (Web Audio API — sem arquivos externos)
+// ============================================================
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+
+function getAudioCtx() {
+    if (!audioCtx) audioCtx = new AudioCtx();
+    return audioCtx;
+}
+
+// Utilitário: cria oscilador simples
+function tocar(freq, tipo, inicio, duracao, gainInicio, gainFim, ctx) {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = tipo;
+    osc.frequency.setValueAtTime(freq, ctx.currentTime + inicio);
+    gain.gain.setValueAtTime(gainInicio, ctx.currentTime + inicio);
+    gain.gain.linearRampToValueAtTime(gainFim, ctx.currentTime + inicio + duracao);
+    osc.start(ctx.currentTime + inicio);
+    osc.stop(ctx.currentTime + inicio + duracao);
+}
+
+// 🎵 Fanfarra de início (sequência de notas tribais)
+function somInicio() {
+    const ctx = getAudioCtx();
+    const notas = [
+        [261, 0.00], [329, 0.15], [392, 0.30],
+        [523, 0.50], [659, 0.70], [784, 0.90],
+        [1046,1.15]
+    ];
+    notas.forEach(([freq, t]) => {
+        tocar(freq, 'triangle', t, 0.25, 0.4, 0.0, ctx);
+        tocar(freq * 0.5, 'sine', t, 0.25, 0.15, 0.0, ctx);
+    });
+    // Percussão tribal
+    [0, 0.15, 0.30, 0.50, 0.70, 0.90, 1.15].forEach(t => {
+        const bufSize = ctx.sampleRate * 0.08;
+        const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / bufSize);
+        const src = ctx.createBufferSource();
+        src.buffer = buf;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0.3, ctx.currentTime + t);
+        g.gain.linearRampToValueAtTime(0, ctx.currentTime + t + 0.08);
+        src.connect(g);
+        g.connect(ctx.destination);
+        src.start(ctx.currentTime + t);
+    });
+}
+
+// ⏱️ Batida de coração (contagem regressiva ≤10s) — chama 1x por tick
+let heartbeatInterval = null;
+function somContagem() {
+    const ctx = getAudioCtx();
+    // Batida dupla: dum-dum
+    tocar(80,  'sine', 0.00, 0.08, 0.6, 0.0, ctx);
+    tocar(60,  'sine', 0.10, 0.08, 0.5, 0.0, ctx);
+}
+
+function iniciarBatidaCoracao() {
+    pararBatidaCoracao();
+    somContagem();
+    heartbeatInterval = setInterval(somContagem, 700);
+}
+
+function pararBatidaCoracao() {
+    if (heartbeatInterval) {
+        clearInterval(heartbeatInterval);
+        heartbeatInterval = null;
+    }
+}
+
+// 💀 Game Over — queda dramática
+function somGameOver() {
+    pararBatidaCoracao();
+    const ctx = getAudioCtx();
+    // Acorde descendente sombrio
+    [[200,0],[170,0.3],[140,0.6],[100,0.9],[70,1.2]].forEach(([freq,t]) => {
+        tocar(freq, 'sawtooth', t, 0.4, 0.3, 0.0, ctx);
+        tocar(freq*1.5, 'sawtooth', t, 0.4, 0.15, 0.0, ctx);
+    });
+    // Ruído de explosão final
+    const bufSize = ctx.sampleRate * 0.8;
+    const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / bufSize) * 0.6;
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.5, ctx.currentTime + 1.2);
+    g.gain.linearRampToValueAtTime(0, ctx.currentTime + 2.0);
+    src.connect(g);
+    g.connect(ctx.destination);
+    src.start(ctx.currentTime + 1.2);
+}
+
+// 🧊 Efeito Gelo — cristais frios tinindo
+function somGelo() {
+    const ctx = getAudioCtx();
+    const freqs = [1800, 2200, 2600, 3100, 3800, 4200];
+    freqs.forEach((freq, i) => {
+        const t = i * 0.07;
+        tocar(freq, 'sine', t, 0.3, 0.35, 0.0, ctx);
+        tocar(freq * 1.02, 'sine', t + 0.01, 0.28, 0.2, 0.0, ctx);
+    });
+    // Swoosh frio
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(600, ctx.currentTime);
+    osc.frequency.linearRampToValueAtTime(200, ctx.currentTime + 0.6);
+    g.gain.setValueAtTime(0.2, ctx.currentTime);
+    g.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.6);
+    osc.connect(g);
+    g.connect(ctx.destination);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.6);
+}
+
+// ☄️ Efeito Meteoro — impacto explosivo + queda
+function somMeteoro() {
+    const ctx = getAudioCtx();
+    // Queda (pitch descendente)
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(900, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.5);
+    g.gain.setValueAtTime(0.4, ctx.currentTime);
+    g.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.5);
+    osc.connect(g);
+    g.connect(ctx.destination);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.5);
+    // Explosão de ruído no impacto
+    const bufSize = ctx.sampleRate * 0.6;
+    const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufSize, 0.5);
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    const g2 = ctx.createGain();
+    g2.gain.setValueAtTime(0.7, ctx.currentTime + 0.45);
+    g2.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.0);
+    src.connect(g2);
+    g2.connect(ctx.destination);
+    src.start(ctx.currentTime + 0.45);
+}
+
+// ✅ Acerto normal — dois bipes harmônicos positivos
+function somAcerto() {
+    const ctx = getAudioCtx();
+    tocar(523, 'sine', 0.00, 0.15, 0.4, 0.0, ctx);
+    tocar(659, 'sine', 0.12, 0.20, 0.4, 0.0, ctx);
+    tocar(784, 'sine', 0.25, 0.25, 0.35, 0.0, ctx);
+}
+
+// ❌ Erro — buzz descendente dissonante
+function somErro() {
+    const ctx = getAudioCtx();
+    tocar(300, 'square', 0.00, 0.08, 0.25, 0.0, ctx);
+    tocar(220, 'square', 0.08, 0.10, 0.25, 0.0, ctx);
+    tocar(160, 'square', 0.17, 0.15, 0.2,  0.0, ctx);
+}
+
+// 🏆 Vitória — fanfarra épica de celebração
+function somVitoria() {
+    pararBatidaCoracao();
+    const ctx = getAudioCtx();
+    const melodia = [
+        [523,0.00,0.15],[659,0.15,0.15],[784,0.30,0.15],
+        [1046,0.45,0.30],[784,0.75,0.10],[1046,0.85,0.40]
+    ];
+    melodia.forEach(([freq,t,dur]) => {
+        tocar(freq, 'triangle', t, dur, 0.45, 0.0, ctx);
+        tocar(freq*0.5, 'sine', t, dur, 0.2, 0.0, ctx);
+    });
+}
+
+// ============================================================
 //  CONFIGURAÇÕES & ESTADO
 // ============================================================
 const EMOJIS = ['🦖', '🦕', '🐉', '🏞️', '☄️', '🌋', '🌧️', '🧊'];
@@ -536,6 +719,8 @@ function atualizarTempoUI() {
     if (tempoRestante <= 10 && !tempoCongelado) {
         tempoEl.style.color = 'var(--cor-erro)';
         tempoEl.parentElement.style.borderColor = 'var(--cor-erro)';
+        // Inicia batida de coração na primeira vez que chega em 10
+        if (tempoRestante === 10) iniciarBatidaCoracao();
     } else if (!tempoCongelado) {
         tempoEl.style.color = '';
         tempoEl.parentElement.style.borderColor = '';
@@ -565,6 +750,11 @@ function mostrarEfeito(texto, cor) {
 //  LÓGICA PRINCIPAL DO JOGO
 // ============================================================
 function iniciarJogo() {
+    // Inicializa AudioContext (precisa de gesto do usuário)
+    getAudioCtx();
+    pararBatidaCoracao();
+    setTimeout(somInicio, 100);
+
     // Reset de estado
     cartasViradas = [];
     acertos = 0;
@@ -656,6 +846,7 @@ function clicarCarta(carta) {
             if (tempoRestante < 0) tempoRestante = 0;
             atualizarTempoUI();
             mostrarEfeito("-15 SEG", "var(--cor-erro)");
+            somMeteoro();
         } 
         // 🧊 Efeito Gelo (Congela Tempo)
         else if (c1.dataset.emoji === '🧊') {
@@ -663,6 +854,8 @@ function clicarCarta(carta) {
             document.getElementById('tempo').style.color = 'var(--cor-acerto)';
             document.getElementById('tempo').parentElement.style.borderColor = 'var(--cor-acerto)';
             mostrarEfeito("TEMPO CONGELADO!", "var(--cor-acerto)");
+            somGelo();
+            pararBatidaCoracao(); // Gelo também pausa a batida de coração
             
             // Timeout para descongelar
             setTimeout(() => {
@@ -676,6 +869,7 @@ function clicarCarta(carta) {
         } else {
             // Acerto normal
             mostrarEfeito("PAR!", "var(--cor-ouro)");
+            somAcerto();
         }
 
         acertos++;
@@ -698,6 +892,7 @@ function clicarCarta(carta) {
         // ❌ ERROU
         c1.classList.add('errado');
         c2.classList.add('errado');
+        somErro();
         
         // Espera animação de erro (shake) terminar e desvira
         setTimeout(() => {
@@ -741,9 +936,11 @@ function finalizarJogo(venceu) {
         const seg = tempoGasto % 60;
         document.getElementById('msg-vitoria').textContent = `Você salvou o mundo em ${min}:${seg.toString().padStart(2, '0')} com ${tentativasRestantes} tentativas restantes!`;
         document.getElementById('vitoria').classList.add('visivel');
+        setTimeout(somVitoria, 200);
     } else {
         // Exibe modal de Game Over
         document.getElementById('game-over').classList.add('visivel');
+        setTimeout(somGameOver, 100);
     }
 }
 
